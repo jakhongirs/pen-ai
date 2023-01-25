@@ -3,3 +3,4 @@ python-environ==0.4.54
 psycopg2==2.9.5
 pre-commit==2.21.0
 requests==2.28.2
+python-telegram-bot==13.12
