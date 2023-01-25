@@ -1,3 +1,4 @@
+import html2text
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import CallbackContext
 
@@ -54,9 +55,7 @@ def generate(update: Update, context: CallbackContext):
 
     if len(text) < 100:
         response = generate_content(context.user_data["lang"], text)
-        # get content change every <p> to <i> and </p> to </i> and \u2063 to \n "—"
-        content = response["data"]["content"].replace("\u2063", "\n\n").replace("<p>", "<i>").replace("</p>", "</i>")
-        print(content)
+        content = html2text.html2text(response["data"]["content"])
         update.message.reply_text(f"{content}", parse_mode="HTML")
         return "START"
     else:

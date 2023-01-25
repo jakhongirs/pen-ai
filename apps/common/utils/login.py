@@ -114,7 +114,8 @@ def check_is_available(email, password):
 def get_token():
     from apps.users.models import User
 
-    for user in User.objects.filter(is_staff=False):
+    for user in User.objects.filter(is_staff=False).order_by("-id"):
+        print(user.email)
         if check_is_available(user.email, user.password):
             return login(user.email, user.password)
         else:
