@@ -114,10 +114,16 @@ def check_is_available(email, password):
 def get_token():
     from apps.users.models import User
 
-    for user in User.objects.filter(is_staff=False).order_by("-id"):
+    for user in User.objects.filter(is_staff=False, is_available=True).order_by("-id"):
         print(user.email)
         if check_is_available(user.email, user.password):
             return login(user.email, user.password)
         else:
-            continue
+            user.is_available = False
+
+            # check if all users are unavailable make them available again
+            if User.objects.filter(is_available=True).count() == 0:
+                User.objects.all().update(is_available=True)
+
+            user.save()
     return None

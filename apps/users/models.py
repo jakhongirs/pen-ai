@@ -37,6 +37,7 @@ class User(AbstractUser, BaseModel):
     token = models.CharField(max_length=255, blank=True, null=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []  # type: ignore
+    is_available = models.BooleanField(default=True)
 
     objects = UserManager()
 
