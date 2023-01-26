@@ -66,8 +66,8 @@ def generate(update: Update, context: CallbackContext):
         return "START"
     else:
         update.message.reply_text(
-            f"Sorry, the maximum number of characters is 100 😔 \n\n"
-            f"Your text is {len(text)} characters \n\n"
+            f"Oops, 100 characters is enough for me to create magic! 💫\n\n"
+            f"Your text is {len(text)} characters, please try again 🙃\n\n"
             f"/start",
             reply_markup=ReplyKeyboardRemove(),
         )

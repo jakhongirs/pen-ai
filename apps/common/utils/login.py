@@ -120,10 +120,10 @@ def get_token():
             return login(user.email, user.password)
         else:
             user.is_available = False
+            user.save()
 
             # check if all users are unavailable make them available again
             if User.objects.filter(is_available=True).count() == 0:
-                User.objects.all().update(is_available=True)
+                User.objects.all().update(is_available=True).save()
 
-            user.save()
     return None
