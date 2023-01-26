@@ -1,4 +1,5 @@
 import html2text
+from bs4 import BeautifulSoup
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import CallbackContext
 
@@ -10,6 +11,11 @@ intro_text = (
     f"I'm here to help you create content faster and more efficiently! 📝⚡️️\n\n️"
     f"Just tell me what you need written and I'll take care of the rest. Let's get started! 🚀"
 )
+
+
+def prettify(htmlstr):
+    soup = BeautifulSoup(htmlstr, "html.parser")
+    return soup.prettify()
 
 
 def language(update: Update, context: CallbackContext):
@@ -55,7 +61,7 @@ def generate(update: Update, context: CallbackContext):
 
     if len(text) < 100:
         response = generate_content(context.user_data["lang"], text)
-        content = html2text.html2text(response["data"]["content"])
+        content = html2text.html2text(prettify(response["data"]["content"]))
         update.message.reply_text(f"{content}", parse_mode="HTML")
         return "START"
     else:
